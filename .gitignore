@@ -1,0 +1,10 @@
+.idea
+.project
+.pydevproject
+********.swp
+.DS_Store
+build
+dist
+MANIFEST
+*.pyc
+*.egg-info

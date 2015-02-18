@@ -77,6 +77,11 @@ class Response(object):
             if response.more == 0:
                 break
             response = response.get_next()
+            self.total = response.total
+            self.next = response.next
+            self.left = response.left
+            self.more = response.more
+            self.posts = response.posts
 
 
 class Thread(object):
@@ -156,3 +161,7 @@ def config(token):
 
 def search(query, token=None):
     return __session.search(query, token)
+
+
+def get(url):
+    return __session.get(url)

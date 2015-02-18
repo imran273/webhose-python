@@ -92,16 +92,16 @@ class Thread(object):
         self.url = thread["url"]
         self.site_full = thread["site_full"]
         self.site = thread["site"]
-        self.site_section = thread["site_section"]
-        self.section_title = thread["section_title"]
+        self.site_section = thread.get("site_section")
+        self.section_title = thread.get("section_title")
         self.title = thread["title"]
-        self.title_full = thread["title_full"]
+        self.title_full = thread.get("title_full", self.title)
         self.published = thread["published"]
         self.published_parsed = parse_iso8601(thread["published"])
         self.replies_count = thread["replies_count"]
         self.participants_count = thread["participants_count"]
         self.site_type = thread["site_type"]
-        self.country = thread["country"]
+        self.country = thread.get("country")
         self.spam_score = thread["spam_score"]
 
 
@@ -120,6 +120,7 @@ class Post(object):
         self.crawled_parsed = parse_iso8601(post["crawled"])
         self.ord_in_thread = post["ord_in_thread"]
         self.language = post["language"]
+        self.external_links = post.get("external_links")
         self.thread = Thread(post["thread"])
 
 

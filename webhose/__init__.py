@@ -7,6 +7,10 @@ import requests
 from datetime import datetime, timedelta
 
 
+class TokenMissingException(IOError):
+    """No token has been defined for making API requests"""
+
+
 class Query(object):
     def __init__(self):
         self.all_terms = None
@@ -137,6 +141,9 @@ class Session(object):
         return Response(response, self)
 
     def search(self, query, token=None):
+        if token is None and self.token is None:
+            raise TokenMissingException("No token defined for webhose API request")
+
         if type(query) is Query:
             query = query.query_string()
 

@@ -23,7 +23,7 @@ class Query(object):
         self.title = None
         self.body_text = None
 
-    def __str__(self):
+    def query_string(self):
         qs = []
         if self.all_terms:
             qs.append(" AND ".join(self.all_terms))
@@ -54,6 +54,8 @@ class Query(object):
             qs.append("text:%s" % self.body_text)
         return " AND ".join("(%s)" % term for term in qs)
 
+    def __str__(self):
+        return self.query_string()
 
 class Response(object):
     """Webhose response. Usually contains a list of posts

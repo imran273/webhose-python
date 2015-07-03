@@ -11,7 +11,7 @@ with open('README.rst', 'r', 'utf-8') as f:
 setup(
     name='webhose',
     packages=['webhose'],
-    version='0.1.3',
+    version='0.1.4',
     author='Israel Tsadok',
     author_email='itsadok@gmail.com',
     url='https://github.com/Buzzilla/webhose-python',

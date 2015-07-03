@@ -109,6 +109,8 @@ class Thread(object):
         self.site_type = thread["site_type"]
         self.country = thread.get("country")
         self.spam_score = thread["spam_score"]
+        self.main_image = thread["main_image"]
+        self.performance_score = thread["performance_score"]
 
 
 class Post(object):
@@ -127,6 +129,9 @@ class Post(object):
         self.ord_in_thread = post["ord_in_thread"]
         self.language = post["language"]
         self.external_links = post.get("external_links")
+        self.persons = post["persons"]
+        self.locations = post["locations"]
+        self.organizations = post["organizations"]
         self.thread = Thread(post["thread"])
 
 

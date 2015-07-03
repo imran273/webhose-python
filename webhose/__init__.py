@@ -154,6 +154,8 @@ class Session(object):
             "token": token or self.token
         }
         response = self.session.get("https://webhose.io/search", params=params)
+        if response.status_code != 200:
+            raise Exception(response.text)
         return Response(response, self)
 
 

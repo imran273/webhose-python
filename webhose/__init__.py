@@ -45,7 +45,7 @@ class Query(object):
                 qs.append("language:%s" % self.language)
         if self.site:
             if type(self.site) is list:
-                qs.append(" OR ".join("site:%s" % self.site for site in self.site))
+                qs.append(" OR ".join("site:%s" % site for site in self.site))
             else:
                 qs.append("site:%s" % self.site)
         if self.title:

@@ -95,6 +95,7 @@ class Thread(object):
     """
 
     def __init__(self, thread):
+        self.uuid = thread["uuid"]
         self.url = thread["url"]
         self.site_full = thread["site_full"]
         self.site = thread["site"]
@@ -118,6 +119,7 @@ class Post(object):
     """
 
     def __init__(self, post):
+        self.uuid = post["uuid"]
         self.url = post["url"]
         self.title = post["title"]
         self.author = post["author"]

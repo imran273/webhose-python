@@ -1,11 +1,11 @@
-try:
-    from urlparse import urljoin
-except ImportError:
-    from urllib.parse import urljoin
-
-import requests
 from datetime import datetime, timedelta
 
+try:
+    from urlparse import urljoin, parse_qs, urlparse
+except ImportError:
+    from urllib.parse import urljoin, parse_qs, urlparse
+
+import requests
 
 class TokenMissingException(IOError):
     """No token has been defined for making API requests"""
@@ -66,11 +66,18 @@ class Response(object):
         self.session = session
         self.total = self.response.json()['totalResults']
         self.next = urljoin(self.response.url, self.response.json()['next'])
+        self.next_ts = self.extract_next_ts()
         self.left = self.response.json()['requestsLeft']
         self.more = self.response.json()['moreResultsAvailable']
         self.posts = []
         for post in self.response.json()['posts']:
             self.posts.append(Post(post))
+
+    def extract_next_ts(self):
+        resource = self.response.json()['next']
+        parsed = urlparse(resource)
+        params = parse_qs(parsed.query)
+        return params['ts'][0]
 
     def get_next(self):
         return self.session.get(self.next)
@@ -88,6 +95,7 @@ class Response(object):
             self.left = response.left
             self.more = response.more
             self.posts = response.posts
+            self.next_ts = response.next_ts
 
 
 class Thread(object):
@@ -149,7 +157,7 @@ class Session(object):
         response = self.session.get(url)
         return Response(response, self)
 
-    def search(self, query, token=None):
+    def search(self, query, token=None, since=None):
         if token is None and self.token is None:
             raise TokenMissingException("No token defined for webhose API request")
 
@@ -160,6 +168,10 @@ class Session(object):
             "q": query,
             "token": token or self.token
         }
+
+        if since:
+            params['ts'] = since
+
         response = self.session.get("https://webhose.io/search", params=params)
         if response.status_code != 200:
             raise Exception(response.text)
@@ -178,8 +190,8 @@ def config(token):
     __session.token = token
 
 
-def search(query, token=None):
-    return __session.search(query, token)
+def search(query, token=None, since=None):
+    return __session.search(query, token, since=since)
 
 
 def get(url):

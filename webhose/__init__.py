@@ -22,6 +22,7 @@ class Query(object):
         self.site = None
         self.title = None
         self.body_text = None
+        self.is_first = None
 
     def query_string(self):
         qs = []
@@ -52,6 +53,8 @@ class Query(object):
             qs.append("title:%s" % self.title)
         if self.body_text:
             qs.append("text:%s" % self.body_text)
+        if self.is_first:
+            qs.append("is_first:true")
         return " AND ".join("(%s)" % term for term in qs)
 
     def __str__(self):

@@ -175,7 +175,7 @@ class Session(object):
         if since:
             params['ts'] = since
 
-        response = self.session.get("https://webhose.io/search", params=params)
+        response = self.session.get("http://webhose.io/search", params=params)
         if response.status_code != 200:
             raise Exception(response.text)
         return Response(response, self)

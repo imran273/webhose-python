@@ -22,13 +22,7 @@ https://webhose.io/dashboard to see your token.
 
 Installing
 ----------
-Available through pip:
-
-.. code-block:: bash
-
-    $ pip install webhose
-
-Alternatively, you can install from source:
+You can install from source:
 
 .. code-block:: bash
 

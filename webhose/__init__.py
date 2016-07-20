@@ -142,9 +142,9 @@ class Post(object):
         self.ord_in_thread = post["ord_in_thread"]
         self.language = post["language"]
         self.external_links = post.get("external_links")
-        self.persons = post["persons"]
-        self.locations = post["locations"]
-        self.organizations = post["organizations"]
+        self.persons = post["entities"]["persons"]
+        self.locations = post["entities"]["locations"]
+        self.organizations = post["entities"]["organizations"]
         self.thread = Thread(post["thread"])
 
 

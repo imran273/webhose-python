@@ -146,6 +146,7 @@ class Post(object):
         self.locations = post["entities"]["locations"]
         self.organizations = post["entities"]["organizations"]
         self.thread = Thread(post["thread"])
+        self.rating = post["rating"]
 
 
 class Session(object):

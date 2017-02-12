@@ -161,7 +161,7 @@ class Session(object):
         response = self.session.get(url)
         return Response(response, self)
 
-    def search(self, query, token=None, since=None):
+    def search(self, query, token=None, since=None, sort=None):
         if token is None and self.token is None:
             raise TokenMissingException("No token defined for webhose API request")
 
@@ -172,6 +172,9 @@ class Session(object):
             "q": query,
             "token": token or self.token
         }
+
+        if sort and sort.lower() == 'relevancy':
+            params['sort'] = 'relevancy'
 
         if since:
             params['ts'] = since
@@ -194,8 +197,8 @@ def config(token):
     __session.token = token
 
 
-def search(query, token=None, since=None):
-    return __session.search(query, token, since=since)
+def search(query, token=None, since=None, sort=None):
+    return __session.search(query, token, since=since, sort=sort)
 
 
 def get(url):
